@@ -84,11 +84,25 @@ public class userbean implements Serializable {
 		boolean valid = Login.validate(username, password);
                 String sessionusername = null;
 		if (valid) {
+			HttpSession session = SessionUtils.getSession();
+                        if(SessionEntry.check(username)){
+                            FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"User has already logged in via another access. Please logout first.",
+							"Please logout out first."));
+                        logout();
+			return "index";
+                        }
+                        else{
+			session.setAttribute("username", username);
+                        boolean insert = SessionEntry.insert(username);
+                        listfilename();
                         if("admin".equals(username) && "1234".equals(password)){
                     return "adminHomepage";
                 }
 			return "studentHomepage";}
-		 else {
+		} else {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -100,6 +114,9 @@ public class userbean implements Serializable {
 
     //logout event, invalidate session
     public String logout() {
+            HttpSession session = SessionUtils.getSession();
+            session.invalidate();
+            SessionEntry.delete(username);
             return "index";
 	}
     public String register() throws SQLException{
@@ -123,6 +140,8 @@ public class userbean implements Serializable {
     public String forgot(){
         boolean valid = Forgot.validateUsernameSecans(username, secans);
         if(valid){
+           HttpSession session = SessionUtils.getSession();
+	   session.setAttribute("username", username);
            return "reset";
         }
         else
