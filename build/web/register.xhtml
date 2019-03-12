@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>CW:Register</title>
+    </h:head>
+    <h:body>
+        <h1> Register </h1>
+        <h3> Fill all the details </h3>
+        <h:form>
+            Enter username:
+                <h:inputText id="Username" value="#{userbean.username}"/>
+                    <br /> <br />
+            Enter password:
+                <h:inputSecret id="Password" value="#{userbean.password}" />
+                    <br /> <br /> 
+            Re-enter password:
+            <h:inputSecret id="Repassword" value="#{userbean.repassword}" />
+                    <br /> <br />
+            Enter your nickname(For Resetting Password):
+            <h:inputText id="Secans" value="#{userbean.secans}" />
+                    <br /> <br />
+                    <h:commandButton type="submit" value="Register" action="#{userbean.register()}" />
+                    <br /> <br />
+            Already a user? 
+                <h:commandLink action="index" value="Log in" />
+        </h:form>
+    </h:body>
+</html>
