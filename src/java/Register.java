@@ -11,8 +11,7 @@ public class Register {
                 
                     try {
                         con = DataConnect.getConnection();
-                        ps = con.prepareStatement("Select username from  loginData where username = \""
-                                + user + "\"");
+                        ps = con.prepareStatement("Select username from  loginData where username = ?");
                         ps.setString(1, user);
                         ResultSet rs = ps.executeQuery();
                         if (rs.next()) {
@@ -35,14 +34,12 @@ public class Register {
                     try {
                         con = DataConnect.getConnection();
                         if (con != null) {
-                        String sql = "INSERT INTO loginData(uid, username, pass, security) VALUES("
-                                + uid + ","
-                                + user + ","
-                                + pass + ","
-                                + security +
-                                ")";
-                        
-                        ps = con.prepareStatement(sql);;
+                        String sql = "INSERT INTO loginData(uid, username, pass, security) VALUES(?,?,?,?)";
+                        ps = con.prepareStatement(sql);
+                        ps.setInt(1, uid);
+                        ps.setString(2, user);
+                        ps.setString(3, pass);
+                        ps.setString(4, security);
                         ps.executeUpdate();
                         System.out.println("Data Added Successfully");
                         

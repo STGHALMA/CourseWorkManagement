@@ -8,9 +8,9 @@ public class Login {
 		PreparedStatement ps = null;
                     try {
                         con = DataConnect.getConnection();
-                        ps = con.prepareStatement("Select username, pass from loginData where username = \""
-                                + user + "\" and pass = \""
-                                + password + "\"");
+                        ps = con.prepareStatement("Select username, pass from loginData where username = ? and pass = ?");
+                        ps.setString(1, user);
+			ps.setString(2, password);
                         ResultSet rs = ps.executeQuery();
                         if (rs.next()) {
 				return true;

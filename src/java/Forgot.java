@@ -10,8 +10,7 @@ public class Forgot {
         String dbsecans = null;
         try {
             con = DataConnect.getConnection();
-            ps = con.prepareStatement("Select security from loginData where username = \""
-            + username + "\"");
+            ps = con.prepareStatement("Select security from loginData where username = ?");
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {

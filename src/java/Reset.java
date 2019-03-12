@@ -10,9 +10,9 @@ public class Reset {
                 
                     try {
                         con = DataConnect.getConnection();
-                        ps = con.prepareStatement("update loginData set pass = \""
-                                + password + "where username = \""
-                        + username + "\"");
+                        ps = con.prepareStatement("update loginData set pass = ? where username = ?");
+                        ps.setString(1, password);
+			ps.setString(2, username);
                         ps.executeUpdate();
                     }    
                     catch (SQLException ex) {
